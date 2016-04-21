@@ -1,51 +1,58 @@
 <!DOCTYPE html>
-<html ng-app='Pokemon'>
+<html ng-app="archer">
     <head>
-        <link href='https://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
-        <title>Pokemon Character Index</title>
+
+        <!--Favicon IMG files-->
+        <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+        <link rel="manifest" href="favicon/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+        <!--Link to CSS and Fonts-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="style.css" media="screen">
+        <!--Custom directive to change the title to the current view-->
+        <update-title view-page="state.current.name"></update-title>
     </head>
 
-    <body ng-controller='Controller'>
+    <!--Start of body and controller link-->
+    <body ng-controller="controller">
 
-    <div class="full_container">
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/English_Pok%C3%A9mon_logo.svg/1000px-English_Pok%C3%A9mon_logo.svg.png"/>
-        <h3 style="font-size: 4em">CHARACTER INDEX</h3>
-        <form ng-submit="displayPokemon()">
-        <input ng-model="num" placeholder="Enter Number 1-711"></input>
-    </form>
-    <!-- <img ng-hide="response" class="pokeball" src="http://img3.wikia.nocookie.net/__cb20130901024704/clubpenguin/images/4/4c/Pokeball.png"/> -->
-         <!-- <hr ng-show="response"> -->
+    <!--UI-view link, puts routes on screen-->
+    <ui-view></ui-view>
 
 
-         <div class = "stats" ng-show="response">
-            <p style="font-size: 3em">{{response.name.toUpperCase()}}</p>
-            <p style="font-size: 2em">Base Experience: {{response.base_experience}}</p>
-            <p style="font-size: 2em">Height: {{response.height}}</p>
-            <p style="font-size: 2em">Weight: {{response.weight}}</p>
-            <p style="font-size: 2em">Attacks: {{response.moves[0].move.name}}, {{response.moves[1].move.name}}, {{response.moves[4].move.name}}.</p>
-            <p style="font-size: 2em">Passive Abilities: {{response.abilities[0].ability.name}}, {{response.abilities[1].ability.name}}.</p>
-            <img src ='{{response.sprites.front_default}}'>
-            <img src='{{response.sprites.back_default}}'>
-         <!-- <hr ng-show="response"> -->
-      </div>
-      <br>
-      <img ng-hide="response" class="static-character" src="http://vignette2.wikia.nocookie.net/pokemon/images/8/88/Xyash.png/revision/latest?cb=20131209060527"/>
-      <hr ng-show="response">
-    <div ng-show="response" class="published">
-        <hr ng-show="response">
-      <p>Developed for design purposes only. team.shaleen. 2016</p>
-  </div>
-    </div>
 
-
-        <!--Angular Library-->
-        <script src ='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js'></script>
-        <!--All JS files-->
-        <script src ='app.js'></script>
-        <script src ='controller.js'></script>
-        <script src ='service.js'></script>
+    <!--Jquery-->
+    <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+    <!--Angular-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+    <!--Angular UI Route-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+    <!--Firebase-->
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <!--Angular Fire-->
+    <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
+    <!--JS files-->
+    <script src="js/app.js"></script>
+    <script src="js/button.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/updateTitle.js"></script>
     </body>
 </html>
-
-<!--NOTHING-->
