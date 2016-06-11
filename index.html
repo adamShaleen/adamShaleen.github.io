@@ -1,58 +1,216 @@
 <!DOCTYPE html>
-<html ng-app="archer">
+<html>
     <head>
-
-        <!--Favicon IMG files-->
-        <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-        <link rel="manifest" href="favicon/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-
-        <!--Link to CSS and Fonts-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-        <link href='https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="style.css" media="screen">
-        <!--Custom directive to change the title to the current view-->
-        <update-title view-page="state.current.name"></update-title>
+        <meta charset="utf-8">
+        <title>Breakout</title>
+        <style>
+            * { padding: 0; margin: 0;}
+            canvas {background: #eee; display: block; margin: 0 auto; border: 1px solid black; margin-top: 20px;}
+        </style>
     </head>
+    <body>
+        <div style="text-align: center; margin-top: 10px"><h1>BREAKOUT</H1></div>
+        <canvas id="myCanvas" width="480" height="320"></canvas>
 
-    <!--Start of body and controller link-->
-    <body ng-controller="controller">
+        <script>
+            // declaring the game space
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
 
-    <!--UI-view link, puts routes on screen-->
-    <ui-view></ui-view>
+            var x = canvas.width/2;
+            var y = canvas.height-30;
+            var dx = 2;
+            var dy = -2;
+            var ballRadius = 10;
+
+            var paddleHeight = 10;
+            var paddleWidth = 75;
+            var paddleX = (canvas.width - paddleWidth)/2;
+
+            // paddle control variables
+            var rightPressed = false;
+            var leftPressed = false;
+
+            // brick variables
+            var brickRowCount = 3;
+            var brickColumnCount = 5;
+            var brickWidth = 75;
+            var brickHeight = 20;
+            var brickPadding = 10;
+            var brickOffsetTop = 30;
+            var brickOffsetLeft = 30;
+
+            // scoreboard
+            var score = 0;
+
+            // lives
+            var lives = 3;
+
+            document.addEventListener("keydown", keyDownHandler, false);
+            document.addEventListener("keyup", keyUpHandler, false);
+
+            var bricks = [];
+                for (c = 0; c < brickColumnCount; c++) {
+                    bricks[c] = [];
+                    for (r = 0; r < brickRowCount; r++) {
+                        bricks[c][r] = {x: 0, y: 0, status: 1};
+                    }
+                }
+
+                function keyDownHandler(e) {
+                    if (e.keyCode === 39) {
+                        rightPressed = true;
+                    }
+                    else if (e.keyCode === 37) {
+                        leftPressed = true;
+                    }
+                }
+
+                function keyUpHandler(e) {
+                    if (e.keyCode === 39) {
+                        rightPressed = false;
+                    }
+                    else if (e.keyCode === 37) {
+                        leftPressed = false;
+                    }
+                }
+
+            // creates the ball
+            function drawBall() {
+                ctx.beginPath();
+                ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                ctx.closePath;
+            }
+
+            // creates the paddle
+            function drawPaddle() {
+                ctx.beginPath();
+                ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+                ctx.fillStyle = "black";
+                ctx.fill();
+                ctx.closePath;
+            }
+
+            // creates the bricks
+            function drawBricks() {
+                for (c = 0; c < brickColumnCount; c++) {
+                    for (r = 0; r < brickRowCount; r++) {
+                        if (bricks[c][r].status == 1) {
+                            var brickX = (c*(brickWidth + brickPadding)) + brickOffsetLeft;
+                            var brickY = (r*(brickHeight + brickPadding)) + brickOffsetTop;
+                            bricks[c][r].x = brickX;
+                            bricks[c][r].y = brickY;
+                            ctx.beginPath();
+                            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                            ctx.fillStyle = "red";
+                            ctx.fill();
+                            ctx.closePath();
+                        }
+                    }
+                }
+            }
+
+            // collision detection of bricks
+            function collisionDetection() {
+                for (c = 0; c < brickColumnCount; c++) {
+                    for (r = 0; r < brickRowCount; r++) {
+                        var b = bricks[c][r];
+                        if (b.status == 1) {
+                            if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                            dy = -dy;
+                            b.status = 0;
+                            score++;
+                                if (score == brickRowCount * brickColumnCount) {
+                                    alert("You win, CONGRATULATIONS!");
+                                    document.location.reload();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //scoreboard
+            function drawScore() {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#0095DD";
+                ctx.fillText("Score: " + score, 8, 20);
+            }
+
+            // lives
+            function drawLives() {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#0095DD";
+                ctx.fillText("Lives: " +lives, canvas.width -65, 20);
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBricks();
+                drawBall();
+                drawPaddle();
+                drawScore();
+                drawLives();
+                collisionDetection();
+
+                // if the ball touches the left or the right walls the direction will be reversed
+                if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                    dx = -dx;
+                }
+                // if the ball touches the top or the bottom walls the direction will be reversed
+                if(y + dy < ballRadius) {
+                    dy = -dy;
+                }
+                else if (y + dy > canvas.height - ballRadius) {
+                    if (x > paddleX && x < paddleX + paddleWidth) {
+                        dy = -dy;
+                    }
+                    else {
+                        lives--;
+                        if (!lives) {
+                            alert("GAME OVER");
+                            document.location.reload();
+                        }
+
+                        else {
+                            x = canvas.width/2;
+                            y = canvas.height -30;
+                            dx = 3;
+                            dy = -3;
+                            paddleX = (canvas.width - paddleWidth)/2;
+                        }
+                    }
+                }
+                if (rightPressed && paddleX < canvas.width - paddleWidth) {
+                    paddleX += 7;
+                }
+                else if (leftPressed && paddleX > 0) {
+                    paddleX -= 7;
+                }
+                x += dx;
+                y += dy;
+                requestAnimationFrame(draw);
+            }
+
+            // mouse movement
+            document.addEventListener("mousemove", mouseMoveHandler, false);
+
+            function mouseMoveHandler(e) {
+                var relativeX = e.clientX - canvas.offsetLeft;
+                if (relativeX > 0 && relativeX < canvas.width) {
+                    paddleX = relativeX - paddleWidth/2;
+                }
+            }
+
+            // constantly calls the draw function
+            draw();
 
 
+        </script>
 
-    <!--Jquery-->
-    <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
-    <!--Angular-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
-    <!--Angular UI Route-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
-    <!--Firebase-->
-    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
-    <!--Angular Fire-->
-    <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
-    <!--JS files-->
-    <script src="js/app.js"></script>
-    <script src="js/button.js"></script>
-    <script src="js/controller.js"></script>
-    <script src="js/service.js"></script>
-    <script src="js/updateTitle.js"></script>
+        <div style="text-align: center; padding-top: 10px"><h3>Much Fun. Such Challenge</h3></div>
+
     </body>
 </html>
