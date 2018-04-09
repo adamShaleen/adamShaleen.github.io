@@ -99,3 +99,7 @@ body {
 
 .sectionContent a:hover {
   color: #8e8c8c; }
+
+.cursor {
+    cursor: pointer;
+}
