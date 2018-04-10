@@ -4,49 +4,34 @@ $("#face").click(function () {
     });
 });
 
-// Hide footer when section display
 $(".navTitles").click(function () {
     $("#footer").fadeOut();
 });
 
-// Show footer when section empty
 $(".menuIcon").click(function () {
     $("#footer").fadeIn();
 });
 
-$(document).ready(function () {
-
-    // Open navBar
-    $(".menuIcon").click(function () {
-        $(".menuIcon").toggleClass("openMenu");
-        $(".navTitles").toggleClass("openMenu");
-    });
-
-    // Close navBar
-    $(".navTitles").click(function () {
-        $(".menuIcon").removeClass("openMenu");
-        $(".navTitles").removeClass("openMenu");
-    });
-});
-
-// Close other sections when new is selected
 $(".menuIcon").click(function () {
-    $("#aboutContent").fadeOut();
-    $("#workContent").fadeOut();
-    $("#radicalContent").fadeOut();
+    $(".menuIcon, .navTitles").toggleClass("openMenu");
 });
 
-// Display About
+$(".navTitles").click(function () {
+    $(".menuIcon, .navTitles").removeClass("openMenu");
+});
+
+$(".menuIcon").click(function () {
+    $("#aboutContent, #workContent, #funContent").fadeOut();
+});
+
 $("#about").click(function () {
     $("#aboutContent").fadeIn();
 });
 
-// Display Work
 $("#work").click(function () {
     $("#workContent").fadeIn();
 });
 
-// Display Radical
-$("#radical").click(function () {
-    $("#radicalContent").fadeIn();
+$("#fun").click(function () {
+    $("#funContent").fadeIn();
 });

@@ -1,6 +1,6 @@
 #face {
   margin: auto;
-  background: url("./adam.png");
+  background: url("./img/adam.png");
   width: 18em;
   height: 18em;
   margin-top: 4em;
@@ -50,7 +50,7 @@ body {
 .navTitles {
   margin: 8px; }
 
-#about, #work, #radical {
+#about, #work, #fun {
   margin-right: 10px;
   opacity: 0;
   transition: .3s ease-in-out; }
@@ -61,7 +61,7 @@ body {
 .openMenu #work {
   opacity: 1; }
 
-.openMenu #radical {
+.openMenu #fun {
   opacity: 1; }
 
 .menuIcon {
