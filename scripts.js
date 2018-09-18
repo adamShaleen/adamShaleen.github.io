@@ -9,6 +9,7 @@ $(".navTitles").click(function () {
 });
 
 $(".menuIcon").click(function () {
+    $("#face").fadeIn();
     $("#footer").fadeIn();
 });
 
@@ -25,13 +26,16 @@ $(".menuIcon").click(function () {
 });
 
 $("#about").click(function () {
+    $("#face").show();
     $("#aboutContent").fadeIn();
 });
 
 $("#work").click(function () {
+    $("#face").show();
     $("#workContent").fadeIn();
 });
 
 $("#fun").click(function () {
+    $("#face").hide();
     $("#funContent").fadeIn();
 });

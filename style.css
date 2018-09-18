@@ -1,3 +1,7 @@
+body {
+  font-family: "Courier new", courier, monospace;
+ }
+
 #face {
   margin: auto;
   background: url("./img/adam.png");
@@ -37,9 +41,6 @@
 #footer a:hover {
   color: #8e8c8c; }
 
-body {
-  font-family: "Courier new", courier, monospace; }
-
 #navBar {
   display: flex;
   justify-content: space-between;
@@ -54,6 +55,10 @@ body {
   margin-right: 10px;
   opacity: 0;
   transition: .3s ease-in-out; }
+
+#funImage {
+    width: 100%;
+}
 
 .openMenu #about {
   opacity: 1; }
