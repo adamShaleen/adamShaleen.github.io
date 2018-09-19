@@ -2,28 +2,20 @@ body {
   font-family: "Courier new", courier, monospace;
  }
 
-#face {
-  margin: auto;
-  background: url("./img/adam.png");
-  width: 18em;
-  height: 18em;
-  margin-top: 4em;
-  background-size: cover;
-  background-repeat: no-repeat; }
+#imgContainer {
+    padding: 10px;
+}
 
-.spin {
-  animation: spin .75s linear; }
+ #img {
+     width: 100%;
+ }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg); }
-  50% {
-    width: 20em;
-    height: 20em; }
-  100% {
-    transform: rotate(360deg);
-    width: 18em;
-    height: 18em; } }
+ @media (min-width: 768px) {
+     #imgContainer {
+         margin: auto;
+         width: 60%;
+     }
+ }
 
 #footer {
   display: flex;
@@ -31,79 +23,97 @@ body {
   width: 100%;
   padding: 10px;
   position: absolute;
-  bottom: 0; }
+  bottom: 0;
+}
 
 #footer a {
   margin-right: 20px;
   text-decoration: none;
-  color: black; }
+  color: black;
+}
 
 #footer a:hover {
-  color: #8e8c8c; }
+  color: #8e8c8c;
+}
 
 #navBar {
   display: flex;
   justify-content: space-between;
   padding: 10px;
   text-align: right;
-  width: 100%; }
+  width: 100%;
+}
 
 .navTitles {
-  margin: 8px; }
+  margin: 8px;
+}
 
 #about, #work, #fun {
   margin-right: 10px;
   opacity: 0;
-  transition: .3s ease-in-out; }
-
-#funImage {
-    width: 100%;
+  transition: .3s ease-in-out;
 }
 
 .openMenu #about {
-  opacity: 1; }
+  opacity: 1;
+}
 
 .openMenu #work {
-  opacity: 1; }
+  opacity: 1;
+}
 
 .openMenu #fun {
-  opacity: 1; }
+  opacity: 1;
+}
 
 .menuIcon {
   display: inline-block;
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 #menuBar1, #menuBar2, #menuBar3 {
   width: 33px;
   height: 2px;
   background-color: black;
   margin: 6px 0;
-  transition: .3s ease-in-out; }
+  transition: .3s ease-in-out;
+}
 
 .openMenu #menuBar1 {
   -webkit-transform: rotate(-45deg) translate(-5px, 5px);
-  transform: rotate(-45deg) translate(-5px, 5px); }
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
 
 .openMenu #menuBar2 {
-  opacity: 0; }
+  opacity: 0;
+}
 
 .openMenu #menuBar3 {
   -webkit-transform: rotate(45deg) translate(-5px, -7px);
-  transform: rotate(45deg) translate(-5px, -7px); }
+  transform: rotate(45deg) translate(-5px, -7px);
+}
 
 .sectionContent {
   display: none;
   margin: auto;
-  margin-top: 3em;
-  max-width: 35em;
-  padding: 10px; }
+  width: 100%;
+  padding: 10px;
+}
 
 .sectionContent a {
   text-decoration: none;
-  color: black; }
+  color: black;
+}
 
 .sectionContent a:hover {
-  color: #8e8c8c; }
+  color: #8e8c8c;
+}
+
+@media (min-width: 768px) {
+    .sectionContent {
+        width: 60%;
+    }
+}
 
 .cursor {
     cursor: pointer;
